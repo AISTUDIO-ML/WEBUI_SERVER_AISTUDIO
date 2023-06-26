@@ -5,7 +5,7 @@ import { useState, ReactNode, MouseEvent } from "react"
 import Link from "next/link"
 
 // ** MUI Components
-// import Alert from "@mui/material/Alert"
+import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
 import Divider from "@mui/material/Divider"
 import Checkbox from "@mui/material/Checkbox"
@@ -30,8 +30,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 
 // ** Hooks
 import { useAuth } from "src/hooks/useAuth"
-
-// import useBgColor from "src/@core/hooks/useBgColor"
+import useBgColor from "src/@core/hooks/useBgColor"
 import { useSettings } from "src/@core/hooks/useSettings"
 
 // ** Configs
@@ -103,8 +102,7 @@ const LoginPage = () => {
   // ** Hooks
   const auth = useAuth()
   const theme = useTheme()
-
-  // const bgColors = useBgColor()
+  const bgColors = useBgColor()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down("md"))
 
@@ -124,7 +122,6 @@ const LoginPage = () => {
 
   const onSubmit = (data: FormData) => {
     const { email, password } = data
-    console.log(data)
     auth.login({ email, password, rememberMe }, () => {
       setError("email", {
         type: "manual",
@@ -195,20 +192,20 @@ const LoginPage = () => {
             </svg>
             <Box sx={{ my: 6 }}>
               <Typography variant='h3' sx={{ mb: 1.5 }}>
-                {`Welcome to ${themeConfig.templateName}`}
+                {`Welcome to ${themeConfig.templateName}! 👋🏻`}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
                 Please sign-in to your account and start the adventure
               </Typography>
             </Box>
-            {/* <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, "& .MuiAlert-message": { p: 0 } }}>
+            <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, "& .MuiAlert-message": { p: 0 } }}>
               <Typography variant='body2' sx={{ mb: 2, color: "primary.main" }}>
-                Admin: <strong>admin@vuexy.com</strong> / Pass: <strong>admin</strong>
+                Admin: <strong>admin@aistudio.ml</strong> / Pass: <strong>admin</strong>
               </Typography>
               <Typography variant='body2' sx={{ color: "primary.main" }}>
-                Client: <strong>client@vuexy.com</strong> / Pass: <strong>client</strong>
+                Client: <strong>client@aistudio.ml</strong> / Pass: <strong>client</strong>
               </Typography>
-            </Alert> */}
+            </Alert>
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <Box sx={{ mb: 4 }}>
                 <Controller
@@ -223,7 +220,7 @@ const LoginPage = () => {
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      placeholder={defaultValues.email}
+                      placeholder='admin@aistudio.ml'
                       error={Boolean(errors.email)}
                       {...(errors.email && { helperText: errors.email.message })}
                     />

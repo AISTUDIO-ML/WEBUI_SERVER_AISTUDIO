@@ -125,7 +125,6 @@ const App = (props: ExtendedAppProps) => {
           <meta name='description' content={`${themeConfig.templateName} – Admin`} />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
-
         <AuthProvider>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>

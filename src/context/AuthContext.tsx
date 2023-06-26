@@ -31,6 +31,8 @@ type Props = {
 }
 
 const AuthProvider = ({ children }: Props) => {
+  const safeRef = React.useRef<boolean>(false)
+
   // ** States
   const [user, setUser] = useState<UserDataType | null>(defaultProvider.user)
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading)
@@ -40,6 +42,7 @@ const AuthProvider = ({ children }: Props) => {
 
   const initAuth = React.useCallback(async (): Promise<void> => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
+    console.log({ storedToken })
     if (storedToken) {
       setLoading(true)
       await axios
@@ -67,49 +70,69 @@ const AuthProvider = ({ children }: Props) => {
       setLoading(false)
     }
   }, [router])
+
   useEffect(() => {
-    initAuth()
+    safeRef.current = true
+    if (safeRef.current) {
+      void initAuth()
+    }
+
+    return () => {
+      safeRef.current = false
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
-      .then(async response => {
-        params.rememberMe
-          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-          : null
+  const handleLogin = React.useCallback(
+    async (params: LoginParams, errorCallback?: ErrCallbackType) => {
+      console.log({ params })
+      try {
+        const persist = params.rememberMe
+        const response = await axios({
+          url: authConfig.loginEndpoint,
+          method: "post",
+          data: params
+        })
+
+        // Store Access Token
+        if (persist) {
+          window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
+        }
         const returnUrl = router.query.returnUrl
-
-        console.log(response.data)
         setUser({ ...response.data.userData })
-        params.rememberMe ? window.localStorage.setItem("userData", JSON.stringify(response.data.userData)) : null
 
+        // Store User Data
+        if (persist) {
+          window.localStorage.setItem("userData", JSON.stringify(response.data.userData))
+        }
         const redirectURL = returnUrl && returnUrl !== "/" ? returnUrl : "/"
+        router.replace(redirectURL as string).catch(err => {
+          if (errorCallback) errorCallback(err)
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [router]
+  )
 
-        router.replace(redirectURL as string)
-      })
-
-      .catch(err => {
-        if (errorCallback) errorCallback(err)
-      })
-  }
-
-  const handleLogout = () => {
+  const handleLogout = React.useCallback(() => {
     setUser(null)
     window.localStorage.removeItem("userData")
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push("/login")
-  }
+  }, [router])
 
   const values = {
     user,
     loading,
     setUser,
     setLoading,
-    login: handleLogin,
-    logout: handleLogout
+    login: React.useMemo(() => handleLogin, [handleLogin]),
+    logout: React.useMemo(() => handleLogout, [handleLogout])
   }
+
+  // console.log("context values", { values })
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }

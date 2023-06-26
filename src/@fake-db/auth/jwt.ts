@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken"
 
 // ** Mock Adapter
-import mock from "src/@fake-db/mock"
+import app from "../mock"
 
 // ** Default AuthConfig
 import defaultAuthConfig from "src/configs/auth"
@@ -38,9 +38,10 @@ const jwtConfig = {
 
 type ResponseType = [number, { [key: string]: any }]
 
-mock.onPost("/jwt/login").reply(request => {
+app.onPost("/jwt/login").reply(request => {
   const { email, password } = JSON.parse(request.data)
 
+  // console.log(email, password)
   let error = {
     email: ["Something went wrong"]
   }
@@ -48,12 +49,13 @@ mock.onPost("/jwt/login").reply(request => {
   const user = users.find(u => u.email === email && u.password === password)
 
   if (user) {
+    console.log({ user })
     const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret as string, { expiresIn: jwtConfig.expirationTime })
-
     const response = {
       accessToken,
       userData: { ...user, password: undefined }
     }
+    console.log({ response })
 
     return [200, response]
   } else {
@@ -65,7 +67,7 @@ mock.onPost("/jwt/login").reply(request => {
   }
 })
 
-mock.onPost("/jwt/register").reply(request => {
+app.onPost("/jwt/register").reply(request => {
   if (request.data.length > 0) {
     const { email, password, username } = JSON.parse(request.data)
     const isEmailAlreadyInUse = users.find(user => user.email === email)
@@ -109,7 +111,7 @@ mock.onPost("/jwt/register").reply(request => {
   }
 })
 
-mock.onGet("/auth/me").reply(config => {
+app.onGet("/auth/me").reply(config => {
   // ** Get token from header
   // @ts-ignore
   const token = config.headers.Authorization as string
