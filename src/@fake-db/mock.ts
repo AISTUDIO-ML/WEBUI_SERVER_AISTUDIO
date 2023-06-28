@@ -1,6 +1,6 @@
-import axios from "axios"
-import MockAdapter from "axios-mock-adapter"
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 
-const app = new MockAdapter(axios)
+const mock = new MockAdapter(axios)
 
-export default app
+export default mock

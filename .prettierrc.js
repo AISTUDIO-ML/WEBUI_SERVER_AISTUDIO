@@ -10,7 +10,7 @@ module.exports = {
   quoteProps: 'as-needed',
   requirePragma: false,
   semi: false,
-  singleQuote: false,
+  singleQuote: true,
   tabWidth: 2,
   trailingComma: 'none',
   useTabs: false

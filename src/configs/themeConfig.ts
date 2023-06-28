@@ -1,5 +1,8 @@
 /**
  * Config
+ * -------------------------------------------------------------------------------------
+ * ! IMPORTANT: Make sure you clear the browser local storage in order to see the config changes in the template.
+ * ! To clear local storage, you may refer https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/.
  */
 
 // ** MUI Imports
@@ -48,13 +51,15 @@ const themeConfig: ThemeConfig = {
   // ** Layout Configs
   templateName: 'AIStudio' /* App Name */,
   layout: 'vertical' /* vertical | horizontal */,
-  mode: 'light' as Mode /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
+  mode: 'dark' as Mode /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
   direction: 'ltr' /* ltr | rtl */,
   skin: 'default' /* default | bordered */,
   contentWidth: 'boxed' /* full | boxed */,
   footer: 'static' /* fixed | static | hidden */,
+
   // ** Routing Configs
   routingLoader: true /* true | false */,
+
   // ** Navigation (Menu) Configs
   navHidden: false /* true | false */,
   menuTextTruncate: true /* true | false */,
@@ -67,9 +72,11 @@ const themeConfig: ThemeConfig = {
   beforeVerticalNavMenuContentPosition: 'fixed' /* fixed | static */,
   horizontalMenuToggle: 'hover' /* click | hover /*! Note: This is for Horizontal navigation menu only */,
   horizontalMenuAnimation: true /* true | false */,
+
   // ** AppBar Configs
   appBar: 'fixed' /* fixed | static | hidden /*! Note: hidden value will only work for Vertical Layout */,
   appBarBlur: true /* true | false */,
+
   // ** Other Configs
   responsiveFontSizes: false /* true | false */,
   disableRipple: false /* true | false */,

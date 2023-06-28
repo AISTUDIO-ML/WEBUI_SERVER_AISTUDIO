@@ -1,31 +1,31 @@
 // ** JWT import
-import jwt from "jsonwebtoken"
+import jwt from 'jsonwebtoken'
 
 // ** Mock Adapter
-import app from "../mock"
+import mock from 'src/@fake-db/mock'
 
 // ** Default AuthConfig
-import defaultAuthConfig from "src/configs/auth"
+import defaultAuthConfig from 'src/configs/auth'
 
 // ** Types
-import { UserDataType } from "src/context/types"
+import { UserDataType } from 'src/context/types'
 
 const users: UserDataType[] = [
   {
     id: 1,
-    role: "admin",
-    password: "admin",
-    fullName: "John Doe",
-    username: "johndoe",
-    email: "admin@aistudio.ml"
+    role: 'admin',
+    password: 'admin',
+    fullName: 'John Doe',
+    username: 'johndoe',
+    email: 'admin@vuexy.com'
   },
   {
     id: 2,
-    role: "client",
-    password: "client",
-    fullName: "Jane Doe",
-    username: "janedoe",
-    email: "client@aistudio.ml"
+    role: 'client',
+    password: 'client',
+    fullName: 'Jane Doe',
+    username: 'janedoe',
+    email: 'client@vuexy.com'
   }
 ]
 
@@ -38,43 +38,41 @@ const jwtConfig = {
 
 type ResponseType = [number, { [key: string]: any }]
 
-app.onPost("/jwt/login").reply(request => {
+mock.onPost('/jwt/login').reply(request => {
   const { email, password } = JSON.parse(request.data)
 
-  // console.log(email, password)
   let error = {
-    email: ["Something went wrong"]
+    email: ['Something went wrong']
   }
 
   const user = users.find(u => u.email === email && u.password === password)
 
   if (user) {
-    console.log({ user })
     const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret as string, { expiresIn: jwtConfig.expirationTime })
+
     const response = {
       accessToken,
       userData: { ...user, password: undefined }
     }
-    console.log({ response })
 
     return [200, response]
   } else {
     error = {
-      email: ["email or Password is Invalid"]
+      email: ['email or Password is Invalid']
     }
 
     return [400, { error }]
   }
 })
 
-app.onPost("/jwt/register").reply(request => {
+mock.onPost('/jwt/register').reply(request => {
   if (request.data.length > 0) {
     const { email, password, username } = JSON.parse(request.data)
     const isEmailAlreadyInUse = users.find(user => user.email === email)
     const isUsernameAlreadyInUse = users.find(user => user.username === username)
     const error = {
-      email: isEmailAlreadyInUse ? "This email is already in use." : null,
-      username: isUsernameAlreadyInUse ? "This username is already in use." : null
+      email: isEmailAlreadyInUse ? 'This email is already in use.' : null,
+      username: isUsernameAlreadyInUse ? 'This username is already in use.' : null
     }
 
     if (!error.username && !error.email) {
@@ -89,8 +87,8 @@ app.onPost("/jwt/register").reply(request => {
         password,
         username,
         avatar: null,
-        fullName: "",
-        role: "admin"
+        fullName: '',
+        role: 'admin'
       }
 
       users.push(userData)
@@ -107,11 +105,11 @@ app.onPost("/jwt/register").reply(request => {
 
     return [200, { error }]
   } else {
-    return [401, { error: "Invalid Data" }]
+    return [401, { error: 'Invalid Data' }]
   }
 })
 
-app.onGet("/auth/me").reply(config => {
+mock.onGet('/auth/me').reply(config => {
   // ** Get token from header
   // @ts-ignore
   const token = config.headers.Authorization as string
@@ -124,9 +122,9 @@ app.onGet("/auth/me").reply(config => {
     // ** If token is expired
     if (err) {
       // ** If onTokenExpiration === 'logout' then send 401 error
-      if (defaultAuthConfig.onTokenExpiration === "logout") {
+      if (defaultAuthConfig.onTokenExpiration === 'logout') {
         // ** 401 response will logout user from AuthContext file
-        response = [401, { error: { error: "Invalid User" } }]
+        response = [401, { error: { error: 'Invalid User' } }]
       } else {
         // ** If onTokenExpiration === 'refreshToken' then generate the new token
         const oldTokenDecoded = jwt.decode(token, { complete: true })
