@@ -78,7 +78,6 @@
     "@iconify/tools": "2.2.6",
     "@iconify/types": "2.0.0",
     "@iconify/utils": "2.1.5",
-    "@next/swc-win32-x64-msvc": "^13.4.7",
     "@types/cleave.js": "1.4.7",
     "@types/draft-js": "0.11.10",
     "@types/jsonwebtoken": "8.5.9",
