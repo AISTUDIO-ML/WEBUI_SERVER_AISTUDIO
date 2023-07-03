@@ -24,22 +24,26 @@ const AppBar = styled(MuiAppBar)<AppBarProps>(({ theme }) => ({
   justifyContent: 'center',
   backgroundColor: 'transparent',
   color: theme.palette.text.primary,
-  minHeight: theme.mixins.toolbar.minHeight,
-  [theme.breakpoints.up('sm')]: {
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6)
-  },
-  [theme.breakpoints.down('sm')]: {
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
-  }
+  minHeight: theme.mixins.toolbar.minHeight
+
+  // [theme.breakpoints.up('sm')]: {
+  //   paddingLeft: theme.spacing(6),
+  //   paddingRight: theme.spacing(6)
+  // }
+
+  // [theme.breakpoints.down('sm')]: {
+  //   paddingLeft: theme.spacing(4),
+  //   paddingRight: theme.spacing(4)
+  // }
 }))
 
-const Toolbar = styled(MuiToolbar)<ToolbarProps>(({ theme }) => ({
-  width: '100%',
-  marginTop: theme.spacing(4),
-  borderRadius: theme.shape.borderRadius,
-  padding: `${theme.spacing(0, 6)} !important`
+const Toolbar = styled(MuiToolbar)<ToolbarProps>(({}) => ({
+  width: '100%'
+
+  // marginTop: theme.spacing(4),
+  // borderRadius: theme.shape.borderRadius
+
+  // padding: `${theme.spacing(0, 6)} !important`
 }))
 
 const LayoutAppBar = (props: Props) => {
@@ -97,7 +101,9 @@ const LayoutAppBar = (props: Props) => {
           backgroundColor: theme => hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.95 : 1),
           ...(skin === 'bordered' ? { border: theme => `1px solid ${theme.palette.divider}` } : { boxShadow: 2 }),
           ...(contentWidth === 'boxed' && {
-            '@media (min-width:1440px)': { maxWidth: theme => `calc(1440px - ${theme.spacing(6 * 2)})` }
+            '@media (min-width:1440px)': {
+              maxWidth: theme => `calc(1440px - ${theme.spacing(6 * 2)})`
+            }
           })
         }}
       >

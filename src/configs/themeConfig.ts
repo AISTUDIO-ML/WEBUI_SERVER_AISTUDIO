@@ -75,7 +75,7 @@ const themeConfig: ThemeConfig = {
 
   // ** AppBar Configs
   appBar: 'fixed' /* fixed | static | hidden /*! Note: hidden value will only work for Vertical Layout */,
-  appBarBlur: true /* true | false */,
+  appBarBlur: false /* true | false */,
 
   // ** Other Configs
   responsiveFontSizes: false /* true | false */,
