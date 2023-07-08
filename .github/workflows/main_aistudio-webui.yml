@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'AISTUDIO-WEBUI'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_501DF0822D544A1A95D14910E99B56E2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DD50C7520C31470695F43251F254472C }}
           package: .
