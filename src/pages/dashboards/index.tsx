@@ -2,80 +2,62 @@
 import Grid from '@mui/material/Grid'
 
 // ** Demo Component Imports
-import CrmSessions from 'src/views/dashboards/crm/CrmSessions'
-import CrmRevenueGrowth from 'src/views/dashboards/crm/CrmRevenueGrowth'
-import CrmBrowserStates from 'src/views/dashboards/crm/CrmBrowserStates'
-import CrmProjectStatus from 'src/views/dashboards/crm/CrmProjectStatus'
-import CrmActiveProjects from 'src/views/dashboards/crm/CrmActiveProjects'
-import CrmLastTransaction from 'src/views/dashboards/crm/CrmLastTransaction'
-import CrmActivityTimeline from 'src/views/dashboards/crm/CrmActivityTimeline'
-import CrmSalesWithAreaChart from 'src/views/dashboards/crm/CrmSalesWithAreaChart'
-import CrmSalesWithRadarChart from 'src/views/dashboards/crm/CrmSalesWithRadarChart'
-import CrmEarningReportsWithTabs from 'src/views/dashboards/crm/CrmEarningReportsWithTabs'
+import AnalyticsProject from 'src/views/dashboards/analytics/AnalyticsProject'
+import AnalyticsTotalEarning from 'src/views/dashboards/analytics/AnalyticsTotalEarning'
+import AnalyticsSourceVisits from 'src/views/dashboards/analytics/AnalyticsSourceVisits'
+import AnalyticsSupportTracker from 'src/views/dashboards/analytics/AnalyticsSupportTracker'
+import AnalyticsMonthlyCampaignState from 'src/views/dashboards/analytics/AnalyticsMonthlyCampaignState'
 
-// ** Custom Component Imports
+// ** Custom Component Import
+import KeenSliderWrapper from 'src/@core/styles/libs/keen-slider'
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-import CardStatsVertical from 'src/@core/components/card-statistics/card-stats-vertical'
 
-const CrmDashboard = () => {
+const AnalyticsDashboard = () => {
   return (
     <ApexChartWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={6} sm={4} lg={2}>
-          <CrmSalesWithAreaChart />
+      <KeenSliderWrapper>
+        <Grid container spacing={6}>
+          {/* <Grid item xs={12} lg={6}>
+            <AnalyticsWebsiteAnalyticsSlider />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <AnalyticsOrderVisits />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <CardStatsWithAreaChart
+              stats='97.5k'
+              chartColor='success'
+              avatarColor='success'
+              title='Revenue Generated'
+              avatarIcon='tabler:credit-card'
+              chartSeries={[{ data: [6, 35, 25, 61, 32, 84, 70] }]}
+            />
+          </Grid> */}
+          {/* <Grid item xs={12} md={6}>
+            <AnalyticsEarningReports />
+          </Grid> */}
+          <Grid item xs={12} md={12}>
+            <AnalyticsSupportTracker />
+          </Grid>
+          {/* <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsSalesByCountries />
+          </Grid> */}
+          <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsTotalEarning />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsMonthlyCampaignState />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsSourceVisits />
+          </Grid>
+          <Grid item xs={12} lg={8}>
+            <AnalyticsProject />
+          </Grid>
         </Grid>
-        <Grid item xs={6} sm={4} lg={2}>
-          <CrmSessions />
-        </Grid>
-        <Grid item xs={6} sm={4} lg={2}>
-          <CardStatsVertical
-            stats='1.28k'
-            chipText='-12.2%'
-            chipColor='default'
-            avatarColor='error'
-            title='Total Profit'
-            subtitle='Last week'
-            avatarIcon='tabler:currency-dollar'
-          />
-        </Grid>
-        <Grid item xs={6} sm={4} lg={2}>
-          <CardStatsVertical
-            stats='24.67k'
-            chipText='+25.2%'
-            avatarColor='info'
-            chipColor='default'
-            title='Total Sales'
-            subtitle='Last week'
-            avatarIcon='tabler:chart-bar'
-          />
-        </Grid>
-        <Grid item xs={12} sm={8} lg={4}>
-          <CrmRevenueGrowth />
-        </Grid>
-        <Grid item xs={12} lg={8}>
-          <CrmEarningReportsWithTabs />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CrmSalesWithRadarChart />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CrmBrowserStates />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CrmProjectStatus />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CrmActiveProjects />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CrmLastTransaction />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CrmActivityTimeline />
-        </Grid>
-      </Grid>
+      </KeenSliderWrapper>
     </ApexChartWrapper>
   )
 }
 
-export default CrmDashboard
+export default AnalyticsDashboard

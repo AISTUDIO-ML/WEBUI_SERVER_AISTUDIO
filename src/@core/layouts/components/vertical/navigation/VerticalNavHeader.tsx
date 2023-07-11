@@ -5,7 +5,6 @@ import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
 import Box, { BoxProps } from '@mui/material/Box'
 import { styled, useTheme } from '@mui/material/styles'
-import Typography, { TypographyProps } from '@mui/material/Typography'
 
 // ** Type Import
 import { LayoutProps } from 'src/@core/layouts/types'
@@ -14,7 +13,7 @@ import { LayoutProps } from 'src/@core/layouts/types'
 import Icon from 'src/@core/components/icon'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import Image from 'next/image'
 
 interface Props {
   navHover: boolean
@@ -39,11 +38,11 @@ const MenuHeaderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   minHeight: theme.mixins.toolbar.minHeight
 }))
 
-const HeaderTitle = styled(Typography)<TypographyProps>({
-  fontWeight: 700,
-  lineHeight: '24px',
-  transition: 'opacity .25s ease-in-out, margin .25s ease-in-out'
-})
+// const HeaderTitle = styled(Typography)<TypographyProps>({
+//   fontWeight: 700,
+//   lineHeight: '24px',
+//   transition: 'opacity .25s ease-in-out, margin .25s ease-in-out'
+// })
 
 const LinkStyled = styled(Link)({
   display: 'flex',
@@ -68,6 +67,8 @@ const VerticalNavHeader = (props: Props) => {
 
   // ** Hooks & Vars
   const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
+
   const { navCollapsed } = settings
 
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
@@ -94,37 +95,15 @@ const VerticalNavHeader = (props: Props) => {
         userNavMenuBranding(props)
       ) : (
         <LinkStyled href='/'>
-          <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
-            <path
-              fillRule='evenodd'
-              clipRule='evenodd'
-              fill={theme.palette.primary.main}
-              d='M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z'
-            />
-            <path
-              fill='#161616'
-              opacity={0.06}
-              fillRule='evenodd'
-              clipRule='evenodd'
-              d='M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z'
-            />
-            <path
-              fill='#161616'
-              opacity={0.06}
-              fillRule='evenodd'
-              clipRule='evenodd'
-              d='M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z'
-            />
-            <path
-              fillRule='evenodd'
-              clipRule='evenodd'
-              fill={theme.palette.primary.main}
-              d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
-            />
-          </svg>
-          <HeaderTitle variant='h4' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2.5 }) }}>
+          <Image
+            src={isDark ? '/logo/ai-studio-dark.svg' : '/logo/ai-studio-light.svg'}
+            alt='ai-studio'
+            width={256 / 2.8}
+            height={70 / 2.8}
+          />
+          {/* <HeaderTitle variant='h4' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2.5 }) }}>
             {themeConfig.templateName}
-          </HeaderTitle>
+          </HeaderTitle> */}
         </LinkStyled>
       )}
 

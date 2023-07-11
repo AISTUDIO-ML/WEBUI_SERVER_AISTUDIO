@@ -4,7 +4,7 @@ import { useState } from 'react'
 // ** MUI Imports
 import Fab from '@mui/material/Fab'
 import { styled } from '@mui/material/styles'
-import Box, { BoxProps } from '@mui/material/Box'
+import Box from '@mui/material/Box'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -27,14 +27,23 @@ const VerticalLayoutWrapper = styled('div')({
   display: 'flex'
 })
 
-const MainContentWrapper = styled(Box)<BoxProps>({
+// const MainContentWrapper = styled(Box)(({theme}))({
+//   flexGrow: 1,
+//   minWidth: 0,
+//   display: 'flex',
+//   minHeight: '100vh',
+//   flexDirection: 'column',
+//   backgroundColor: ({ theme }) => (theme.palette.mode === 'dark' ? '#05050F' : "'#fff'")
+// })
+
+const MainContentWrapper = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   minWidth: 0,
   display: 'flex',
   minHeight: '100vh',
-  flexDirection: 'column'
-})
-
+  flexDirection: 'column',
+  backgroundColor: theme.palette.mode === 'dark' ? '#05050F' : theme.palette.background.default
+}))
 const ContentWrapper = styled('main')(({ theme }) => ({
   flexGrow: 1,
   width: '100%',

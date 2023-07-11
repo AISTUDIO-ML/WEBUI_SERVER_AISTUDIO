@@ -82,7 +82,7 @@ const AnalyticsSourceVisits = () => {
         }
       />
       <CardContent>
-        {data.map((item: DataType, index: number) => {
+        {data.slice(0, 3).map((item: DataType, index: number) => {
           return (
             <Box
               key={index}

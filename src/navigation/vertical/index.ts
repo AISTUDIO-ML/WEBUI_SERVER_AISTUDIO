@@ -625,9 +625,9 @@ const navigation = (): VerticalNavItemsType => {
 export default navigation
 
 const tabs = [
-  {
-    sectionTitle: 'Apps & Pages'
-  },
+  // {
+  //   sectionTitle: 'Apps & Pages'
+  // },
   {
     title: 'Home',
     path: '/',

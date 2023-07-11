@@ -5,14 +5,12 @@ import { useState, ReactNode, MouseEvent } from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
-import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import Box, { BoxProps } from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
@@ -30,35 +28,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
-import useBgColor from 'src/@core/hooks/useBgColor'
-import { useSettings } from 'src/@core/hooks/useSettings'
+
+// import useBgColor from 'src/@core/hooks/useBgColor'
+// import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-
-// ** Styled Components
-const LoginIllustration = styled('img')(({ theme }) => ({
-  zIndex: 2,
-  maxHeight: 680,
-
-  // marginTop: theme.spacing(12),
-  // marginBottom: theme.spacing(12),
-  objectFit: 'cover',
-  height: '100%',
-  width: '100%',
-  [theme.breakpoints.down(1540)]: {
-    maxHeight: 550
-  },
-  [theme.breakpoints.down('lg')]: {
-    maxHeight: 500
-  }
-}))
+import Image from 'next/image'
+import AuthLayout from 'src/layouts/auth'
 
 const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -91,7 +71,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   password: 'admin',
-  email: 'admin@vuexy.com'
+  email: 'admin@aistudio.ml'
 }
 
 interface FormData {
@@ -106,12 +86,8 @@ const LoginPage = () => {
   // ** Hooks
   const auth = useAuth()
   const theme = useTheme()
-  const bgColors = useBgColor()
-  const { settings } = useSettings()
-  const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
-  // ** Vars
-  const { skin } = settings
+  const isDark = theme.palette.mode === 'dark'
 
   const {
     control,
@@ -134,10 +110,8 @@ const LoginPage = () => {
     })
   }
 
-  const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
-
   return (
-    <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
+    <AuthLayout>
       <RightWrapper>
         <Box
           sx={{
@@ -149,7 +123,12 @@ const LoginPage = () => {
           }}
         >
           <Box sx={{ width: '100%', maxWidth: 400 }}>
-            Logo
+            <Image
+              src={isDark ? '/logo/ai-studio-dark.svg' : '/logo/ai-studio-light.svg'}
+              alt='ai-studio'
+              width={256 / 2.5}
+              height={70 / 2.5}
+            />
             <Box sx={{ my: 6 }}>
               <Typography variant='h3' sx={{ mb: 1.5 }}>
                 {`Welcome to ${themeConfig.templateName}`}
@@ -160,7 +139,7 @@ const LoginPage = () => {
             </Box>
             {/* <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}>
               <Typography variant='body2' sx={{ mb: 2, color: 'primary.main' }}>
-                Admin: <strong>admin@vuexy.com</strong> / Pass: <strong>admin</strong>
+                Admin: <strong>admin@aistudio.ml</strong> / Pass: <strong>admin</strong>
               </Typography>
               <Typography variant='body2' sx={{ color: 'primary.main' }}>
                 Client: <strong>client@vuexy.com</strong> / Pass: <strong>client</strong>
@@ -180,7 +159,7 @@ const LoginPage = () => {
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      placeholder='admin@vuexy.com'
+                      placeholder='admin@aistudio.ml'
                       error={Boolean(errors.email)}
                       {...(errors.email && { helperText: errors.email.message })}
                     />
@@ -257,13 +236,8 @@ const LoginPage = () => {
                 or
               </Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#497ce2' }}
-                  onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-                >
-                  <Icon icon='mdi:facebook' />
+                <IconButton href='/' component={Link} onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                  <Icon icon='mdi:apple' />
                 </IconButton>
                 <IconButton
                   href='/'
@@ -271,7 +245,10 @@ const LoginPage = () => {
                   sx={{ color: '#1da1f2' }}
                   onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
                 >
-                  <Icon icon='mdi:twitter' />
+                  <Icon icon='mdi:azure' />
+                </IconButton>
+                <IconButton href='/' component={Link} onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                  <Icon icon='mdi:google' />
                 </IconButton>
                 <IconButton
                   href='/'
@@ -281,47 +258,12 @@ const LoginPage = () => {
                 >
                   <Icon icon='mdi:github' />
                 </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#db4437' }}
-                  onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-                >
-                  <Icon icon='mdi:google' />
-                </IconButton>
               </Box>
             </form>
           </Box>
         </Box>
       </RightWrapper>
-      {!hidden ? (
-        <Box
-          sx={{
-            flex: 1,
-            display: 'flex',
-            position: 'relative',
-            alignItems: 'center',
-
-            // borderRadius: '10px',
-            justifyContent: 'center',
-            backgroundColor: 'customColors.bodyBg',
-
-            // margin: theme => theme.spacing(8),
-            backgroundImage: `url(/login/banner.png)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        >
-          {/* <LoginIllustration
-            alt='login-illustration'
-            // src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-
-            src='/login/banner.png'
-          /> */}
-          {/* <FooterIllustrationsV2 /> */}
-        </Box>
-      ) : null}
-    </Box>
+    </AuthLayout>
   )
 }
 
