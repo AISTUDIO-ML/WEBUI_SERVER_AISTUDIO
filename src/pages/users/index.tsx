@@ -9,6 +9,7 @@ import { TabContext, TabPanel as MUITabPanel } from '@mui/lab'
 import { Tab, Tabs } from '@mui/material'
 import UsersScreen from 'src/views/users/UsersScreen'
 import CustomAccountRoles from 'src/views/users/CustomAccountRoles'
+import BreadcrumbsComponent from 'src/views/groups/BreadcrumbsComponent'
 
 // import BreadcrumbsComponent from 'src/views/groups/BreadcrumbsComponent'
 
@@ -39,7 +40,12 @@ const UserList = () => {
 
   return (
     <React.Fragment>
-      {/* <BreadcrumbsComponent /> */}
+      <BreadcrumbsComponent
+        list={[
+          { href: '/app', name: 'Home' },
+          { href: '/app', name: 'Users' }
+        ]}
+      />
       <Grid spacing={8}>
         <Grid>
           <TabContext value={state.page}>

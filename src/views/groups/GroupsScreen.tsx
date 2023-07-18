@@ -152,7 +152,7 @@ const columns: GridColDef[] = [
     valueGetter: params => new Date(params.value),
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
-        {params.row.start_date}
+        {/* {params.row.start_date} */}-
       </Typography>
     )
   },
@@ -242,7 +242,6 @@ const GroupsScreen = () => {
           </Card>
         </Card>
       </Grid>
-      <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
     </React.Fragment>
   )
 }

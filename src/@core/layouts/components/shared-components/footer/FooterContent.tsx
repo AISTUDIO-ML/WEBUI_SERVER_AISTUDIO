@@ -35,18 +35,10 @@ const FooterContent = () => {
         <Box component='span' sx={{ mx: 1, color: 'error.main' }}>
           ❤️
         </Box>
-        {`by`}
         <Typography sx={{ ml: 1 }} target='_blank' href='https://honeypotz.net/' component={StyledCompanyName}>
           Honeypotz
         </Typography>
       </Typography>
-      {/* {hidden ? null : (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Typography target='_blank' component={LinkStyled} href='/'>
-            License
-          </Typography>
-        </Box>
-      )} */}
     </Box>
   )
 }

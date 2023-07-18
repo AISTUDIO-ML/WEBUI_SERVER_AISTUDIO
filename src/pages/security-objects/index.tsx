@@ -2,13 +2,19 @@ import React from 'react'
 import Grid from '@mui/material/Grid'
 import Title from 'src/views/elements/Title'
 import SecurityObjectsScreen from 'src/views/security-objects'
+import BreadcrumbsComponent from 'src/views/groups/BreadcrumbsComponent'
 
 // import BreadcrumbsComponent from 'src/views/groups/BreadcrumbsComponent'
 
 const SecurityObjectsPage = () => {
   return (
     <React.Fragment>
-      {/* <BreadcrumbsComponent /> */}
+      <BreadcrumbsComponent
+        list={[
+          { href: '/app', name: 'Home' },
+          { href: '/app', name: 'security-objects' }
+        ]}
+      />
       <Grid spacing={8}>
         <Grid
           sx={{

@@ -9,6 +9,7 @@ import { TabContext, TabPanel as MUITabPanel } from '@mui/lab'
 import { Tab, Tabs } from '@mui/material'
 import PluginsScreen from 'src/views/plugins/PluginsScreen'
 import PluginsLibraryScreen from 'src/views/plugins/PluginsLibraryScreen'
+import BreadcrumbsComponent from 'src/views/groups/BreadcrumbsComponent'
 
 const TabPanel = styled(MUITabPanel)(({}) => ({
   margin: 0,
@@ -34,7 +35,12 @@ const UserList = () => {
 
   return (
     <React.Fragment>
-      {/* <BreadcrumbsComponent /> */}
+      <BreadcrumbsComponent
+        list={[
+          { href: '/app', name: 'Home' },
+          { href: '/app', name: 'plugins' }
+        ]}
+      />
       <Grid spacing={8}>
         <Grid>
           <TabContext value={state.page}>

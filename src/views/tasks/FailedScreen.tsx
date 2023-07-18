@@ -9,20 +9,10 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
-// ** React Imports
-import { MouseEvent } from 'react'
-
-// ** MUI Imports
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
-// ** Store Imports
-
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Utils Import
@@ -36,8 +26,7 @@ import { getInitials } from 'src/@core/utils/get-initials'
 import { ThemeColor } from 'src/@core/layouts/types'
 
 // ** Custom Table Components Imports
-import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
-import { Tab, Tabs, Button } from '@mui/material'
+import { Button } from '@mui/material'
 import React from 'react'
 import { rows } from 'src/@fake-db/table/static-data'
 
@@ -78,17 +67,17 @@ const statusObj: StatusObj = {
   5: { title: 'applied', color: 'info' }
 }
 
-// PLUGIN NAME
-// GROUPS
-// SECURITY OBJECTS
-// DESCRIPTION
+// REQUESTER
+// REQUEST
+// APPROVERS
+// TIME
 
 const columns: GridColDef[] = [
   {
     flex: 1,
     minWidth: 150,
     field: 'full_name',
-    headerName: 'PLUGIN NAME',
+    headerName: 'REQUESTER',
     renderCell: (params: GridRenderCellParams) => {
       // const { row } = params
       return (
@@ -102,8 +91,8 @@ const columns: GridColDef[] = [
   {
     flex: 1,
     minWidth: 110,
-    field: 'groups',
-    headerName: 'GROUPS',
+    field: 'request',
+    headerName: 'REQUEST',
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
         Plugins
@@ -114,8 +103,8 @@ const columns: GridColDef[] = [
   {
     flex: 1,
     minWidth: 180,
-    field: 'security-objects',
-    headerName: 'SECURITY OBJECTS',
+    field: 'approvers',
+    headerName: 'APPROVERS',
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
         Security Objects
@@ -124,9 +113,9 @@ const columns: GridColDef[] = [
   },
   {
     flex: 1,
-    field: 'Description',
+    field: 'time',
     minWidth: 150,
-    headerName: 'DESCRIPTION',
+    headerName: 'TIME',
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
         Description
@@ -135,7 +124,7 @@ const columns: GridColDef[] = [
   }
 ]
 
-const PluginsScreen = () => {
+const FailedScreen = () => {
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
 
@@ -143,88 +132,58 @@ const PluginsScreen = () => {
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
-  const [selected, setSelected] = React.useState('All Plugins')
-
   return (
     <React.Fragment>
       <Grid item xs={12}>
-        <Card>
+        <Box
+          sx={{
+            py: 4,
+            px: 6,
+            rowGap: 2,
+            columnGap: 4,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
           <Box
             sx={{
-              p: '1rem 1.5rem 0'
-            }}
-          >
-            <ToggleButtonGroup
-              exclusive
-              value={selected}
-              onChange={(e, v) => setSelected(v)}
-              aria-label='text alignment'
-              color='primary'
-            >
-              <ToggleButton value='All Plugins' aria-label='All Plugins'>
-                All Plugins
-              </ToggleButton>
-              <ToggleButton value='Library Plugins' aria-label='Library Plugins'>
-                Library Plugins
-              </ToggleButton>
-
-              <ToggleButton value='System Plugins' aria-label='System Plugins'>
-                System Plugins
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-          <Box
-            sx={{
-              py: 4,
-              px: 6,
-              rowGap: 2,
-              columnGap: 4,
               display: 'flex',
-              flexWrap: 'wrap',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              gap: 1
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1
-              }}
-            >
-              <Button color='secondary' variant='tonal' startIcon={<Icon icon='tabler:trash' />}>
-                Delete Selected
-              </Button>
-              <Button color='secondary' variant='text'>
-                Disable
-              </Button>
-              <Button color='secondary' variant='text'>
-                Enable
-              </Button>
-            </Box>
-            <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-              <Button variant='contained' sx={{ '& svg': { mr: 2 } }}>
-                <Icon fontSize='1.125rem' icon='tabler:download' />
-                Download as CSV
-              </Button>
-            </Box>
+            <Button color='secondary' variant='tonal' startIcon={<Icon icon='tabler:trash' />}>
+              Delete Selected
+            </Button>
+            <Button color='secondary' variant='text'>
+              Disable
+            </Button>
+            <Button color='secondary' variant='text'>
+              Enable
+            </Button>
           </Box>
-          <Card>
-            <DataGrid
-              autoHeight
-              rows={rows}
-              columns={columns}
-              checkboxSelection
-              pageSizeOptions={[7, 10, 25, 50]}
-              paginationModel={paginationModel}
-              onPaginationModelChange={setPaginationModel}
-            />
-          </Card>
+          <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Button variant='contained' sx={{ '& svg': { mr: 2 } }}>
+              <Icon fontSize='1.125rem' icon='tabler:download' />
+              Download as CSV
+            </Button>
+          </Box>
+        </Box>
+        <Card>
+          <DataGrid
+            autoHeight
+            rows={[]}
+            columns={columns}
+            pageSizeOptions={[7, 10, 25, 50]}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+          />
         </Card>
       </Grid>
-      <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
     </React.Fragment>
   )
 }
 
-export default PluginsScreen
+export default FailedScreen

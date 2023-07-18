@@ -1,24 +1,36 @@
 import React from 'react'
 import { Breadcrumbs, Link as MuiLink } from '@mui/material'
 
-const BreadcrumbsComponent = () => {
+type List = {
+  href: string
+  name: string
+}
+
+type Props = {
+  list?: List[]
+}
+
+const BreadcrumbsComponent = ({ list }: Props) => {
   return (
-    <Breadcrumbs
-      aria-label='breadcrumb'
-      sx={{
-        fontSize: 10
-      }}
-    >
-      <MuiLink underline='hover' color='inherit' href='/'>
-        MUI
-      </MuiLink>
-      <MuiLink underline='hover' color='inherit' href='/material-ui/getting-started/installation/'>
-        Core
-      </MuiLink>
-      <MuiLink color='inherit' href='/material-ui/getting-started/installation/'>
-        Core
-      </MuiLink>
-    </Breadcrumbs>
+    <React.Fragment>
+      {list && list.length === 0 ? null : (
+        <Breadcrumbs
+          aria-label='breadcrumb'
+          sx={{
+            fontSize: 10
+          }}
+        >
+          {list &&
+            list.map((item, index) => {
+              return (
+                <MuiLink key={index} underline='hover' color='inherit' href={item.href}>
+                  {item.name}
+                </MuiLink>
+              )
+            })}
+        </Breadcrumbs>
+      )}
+    </React.Fragment>
   )
 }
 export default BreadcrumbsComponent
